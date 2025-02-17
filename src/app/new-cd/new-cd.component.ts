@@ -24,6 +24,19 @@ export class NewCDComponent implements OnInit {
       quantite: [null],
       price: [null],
     })
+
+    this.formulaire.valueChanges.subscribe((formValue) => {
+      this.currentCD = {
+        id: 0,
+        title: formValue.title,
+        author: formValue.author,
+        thumbnail: formValue.thumbnail,
+        dateDeSortie: formValue.dateDeSortie,
+        quantite: formValue.quantite,
+        price: formValue.price,
+        onsale: false
+      };
+    });
   }
 
   formSoumis(): void {

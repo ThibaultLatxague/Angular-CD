@@ -6,32 +6,44 @@
                 <label for="title">Titre</label>
                 <input type="text" class="form-control" id="title" formControlName="title"/>
             </div>
-            
-            <div class="form-group">
-                <label for="author">Auteur</label>
-                <input type="text" class="form-control" id="author" formControlName="author"/>
-            </div>
-            
-            <div class="form-group">
-                <label for="thumbnail">Image</label>
-                <input type="text" class="form-control" id="thumbnail" formControlName="thumbnail"/>
-            </div>
-            
+
             <div class="form-group">
                 <label for="dateDeSortie">Date de sortie</label>
                 <input type="date" class="form-control" id="dateDeSortie" formControlName="dateDeSortie"/>
             </div>
             
             <div class="form-group">
+                <label for="author">Auteur</label>
+                <input type="text" class="form-control" id="author" formControlName="author"/>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Prix</label>
+                <input type="number" class="form-control" id="price" formControlName="price" step="0.01"/>
+            </div>
+
+            <div class="form-group">
                 <label for="quantite">Quantité</label>
                 <input type="number" class="form-control" id="quantite" formControlName="quantite"/>
             </div>
             
             <div class="form-group">
-                <label for="price">Prix</label>
-                <input type="number" class="form-control" id="price" formControlName="price" step="0.01"/>
+                <label for="thumbnail">Image</label>
+                <input type="text" class="form-control" id="thumbnail" formControlName="thumbnail"/>
             </div>
             <button [disabled]="formulaire.invalid" type="submit" (click)="formSoumis()">Envoyer le formulaire</button>
         </form>
+    </section>
+
+    <section class="subForm visuForm">
+        <h2>Vue du CD</h2>
+        <div *ngIf="currentCD !== undefined">
+            <h3>{{currentCD.title}}</h3>
+            <p>Sortie le : {{currentCD.dateDeSortie}}</p>
+            <p>Auteur / groupe : {{currentCD.author}}</p>
+            <p>Prix : {{currentCD.price | currency: 'EUR'}}</p>
+            <p>Quantité : {{currentCD.quantite}}</p>
+            <img [src]="currentCD.thumbnail" alt="{{currentCD.title}}">
+        </div>
     </section>
 </div>
