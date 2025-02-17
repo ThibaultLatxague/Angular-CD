@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CD } from '../models/cd.model';
+import { CdsService } from '../services/cds.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-cd',
@@ -14,8 +16,8 @@ export class NewCDComponent implements OnInit {
   currentCD!: CD;
   thumbRegex!: RegExp;
 
-  constructor(private formBuilder: FormBuilder) {  }
-  
+  constructor(private formBuilder: FormBuilder, private cdService: CdsService, private router: Router) {  }
+
   ngOnInit(): void {
     this.thumbRegex = new RegExp('https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp)$');
 
@@ -39,11 +41,31 @@ export class NewCDComponent implements OnInit {
         dateDeSortie: formValue.dateDeSortie,
         quantite: formValue.quantite,
         price: formValue.price,
-        onsale: false
+        onsale: true
       };
     });
   }
 
-  formSoumis(): void {
+  addCD(): void {
+    let newCD = {
+      id: 0,
+      title: this.formulaire.get('title')?.value,
+      author: this.formulaire.get('author')?.value,
+      thumbnail: this.formulaire.get('thumbnail')?.value,
+      dateDeSortie: this.formulaire.get('dateDeSortie')?.value,
+      quantite: this.formulaire.get('quantite')?.value,
+      price: this.formulaire.get('price')?.value,
+      onsale: false
+    };
+
+    this.cdService.addCd(newCD).subscribe({
+      next: cd => {
+        this.router.navigateByUrl('/catalog');
+      },
+      error: err => {
+        console.error('Observable ajout CD a émis une erreur : ' + err);
+        alert('Une erreur est survenue lors de l\'ajout du CD');
+      }
+    })
   }
 }

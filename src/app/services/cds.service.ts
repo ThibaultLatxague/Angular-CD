@@ -19,4 +19,9 @@ export class CdsService {
     console.log(this.http.get<CD>('http://localhost:3000/CD/' + id));
     return this.http.get<CD>('http://localhost:3000/CD/' + id);
   }
+
+  addCd(nouvCd: CD): Observable<CD> {
+    nouvCd.id = Math.floor(Math.random() * 1000);
+    return this.http.post<CD>('http://localhost:3000/CD', nouvCd);
+  }
 }
