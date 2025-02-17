@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CD } from '../models/cd.model';
 
 @Component({
@@ -12,18 +12,23 @@ export class NewCDComponent implements OnInit {
   
   formulaire!: FormGroup;
   currentCD!: CD;
+  thumbRegex!: RegExp;
 
   constructor(private formBuilder: FormBuilder) {  }
   
   ngOnInit(): void {
+    this.thumbRegex = new RegExp('https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp)$');
+
     this.formulaire = this.formBuilder.group({
-      title: [null],
-      author: [null],
-      thumbnail: [null],
-      dateDeSortie: [null],
-      quantite: [null],
-      price: [null],
-    })
+      title: [null, [Validators.required, Validators.minLength(6)]],
+      author: [null, [Validators.required, Validators.minLength(6)]],
+      thumbnail: [null, [Validators.required, Validators.pattern(this.thumbRegex)]],
+      dateDeSortie: [null, [Validators.required, Validators.min(0)]],
+      quantite: [null, [Validators.required, Validators.min(0)]],
+      price: [null, [Validators.required, Validators.min(0)]],
+    },
+    {updateOn: 'blur'}
+  )
 
     this.formulaire.valueChanges.subscribe((formValue) => {
       this.currentCD = {
@@ -40,6 +45,5 @@ export class NewCDComponent implements OnInit {
   }
 
   formSoumis(): void {
-
   }
 }

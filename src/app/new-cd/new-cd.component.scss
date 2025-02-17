@@ -46,6 +46,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
+    &:disabled{
+        background: gray;
+        cursor:auto;
+    }
 }
 
 .visuForm {
