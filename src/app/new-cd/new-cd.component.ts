@@ -27,7 +27,7 @@ export class NewCDComponent implements OnInit {
       quantite: [null, [Validators.required, Validators.min(0)]],
       price: [null, [Validators.required, Validators.min(0)]],
     },
-    {updateOn: 'blur'}
+    // {updateOn: 'blur'} // Fais une update quand on sort d'un champ
   )
 
     this.formulaire.valueChanges.subscribe((formValue) => {
