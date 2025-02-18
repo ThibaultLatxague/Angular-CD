@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,7 @@ import { NewCDComponent } from './new-cd/new-cd.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [provideHttpClient()], // Possible withInterceptorsFromDi() dans parenthèses pour intercepter des requetes API
   bootstrap: [AppComponent]
 })
 export class AppModule { }
